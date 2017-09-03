@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>datepicker demo</title>
+  <title>edit data</title>
   <link rel="stylesheet" href="jquery-ui.css">
   <script src="jquery-3.2.1.min.js"></script>
   <script src="jquery-ui.js"></script>
@@ -11,14 +11,11 @@
 <table cellspacing='0' cellpadding='4' border='0'>
 	<tr>
 		<td>
-			
 			<div>Project Name: <input type='text' id='txtPName' /><br /><br /></div>
-			
-			
 		</td>
-		<td rowspan='3'>
+		<td rowspan='3' valign='top'>
 			<table id='tblDates' cellspacing='0' cellpadding='4' border='0'>
-				
+				<tr><td colspan='3' align='center'>Milestones</td></tr>
 			</table>
 		</td>
 	</tr>
@@ -33,18 +30,21 @@
 		</td>
 	</tr>
 </table>
- 
 </body>
+</html>
+
 <script language="Javascript">
 	var $curIdx = 0; //id of this project in table, initially as 0 while adding new, assign
-	var $strCates = '321'; //string of categories got from remote PHP
-
+	var $strCates = ''; //string of categories got from remote PHP
+	var $strMilestones = ''; //string of milestones got from remote PHP
 
 	function init() {
 		$( "#datepicker" ).datepicker();
 		loadCategory();
+		loadMilstones();
 	}
-	
+
+	//loading categories from remote DB
 	function loadCategory() {
 		//get data
 		$.ajax({
@@ -62,7 +62,26 @@
 			if (arrCates[i] != '') $('#selCate').append($('<option/>', {value: arrCates[i], text : arrCates[i] }));
 		}
 	}
+	
+	//loading all milesteons from remote DB in order
+	function loadMilstones() {
+		//get data
+		$.ajax({
+			url: "getMilestones.php?dbpwd=Admin!!2015", 
+			success: function(result){
+				alert(result);
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				$strMilestones = '~FC~BCO~A-rev~A-can~RST';
+			}
+		});
+		alert($strMilestones);
+		//put data into the dropdown menu
+		var arrMSs = $strMilestones.split('~');
+		for (i=0; i<arrMSs.length; i++) {
+			if (arrMSs[i] != '') $('#tblDates tr:last').after("<tr><td><input type='button' style='width:80px' id='MS" + i + "' value='" + arrMSs[i] + "'/></td><td>YYYY/MM/DD</td></tr>");
+		}
+	}
 </script>
 
 
-</html>
