@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>datepicker demo</title>
+  <link rel="stylesheet" href="jquery-ui.css">
+  <script src="jquery-3.2.1.min.js"></script>
+  <script src="jquery-ui.js"></script>
+</head>
+<body onload='init()'>
+<table cellspacing='0' cellpadding='4' border='0'>
+	<tr>
+		<td>
+			
+			<div>Project Name: <input type='text' id='txtPName' /><br /><br /></div>
+			
+			
+		</td>
+		<td rowspan='3'>
+			<table id='tblDates' cellspacing='0' cellpadding='4' border='0'>
+				
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div>Category: <select id='selCate' /><br /><br /></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="datepicker"></div>
+		</td>
+	</tr>
+</table>
+ 
+</body>
+<script language="Javascript">
+	var $curIdx = 0; //id of this project in table, initially as 0 while adding new, assign
+	var $strCates = '321'; //string of categories got from remote PHP
+
+
+	function init() {
+		$( "#datepicker" ).datepicker();
+		loadCategory();
+	}
+	
+	function loadCategory() {
+		//get data
+		$.ajax({
+			url: "getCategory.php?dbpwd=Admin!!2015", 
+			success: function(result){
+				alert(result);
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				$strCates = '~CSMB~BC';
+			}
+		});
+		//put data into the dropdown menu
+		var arrCates = $strCates.split('~');
+		for (i=0; i<arrCates.length; i++) {
+			if (arrCates[i] != '') $('#selCate').append($('<option/>', {value: arrCates[i], text : arrCates[i] }));
+		}
+	}
+</script>
+
+
+</html>
