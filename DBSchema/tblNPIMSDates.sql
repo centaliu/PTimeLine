@@ -1,8 +1,7 @@
 /* table creation */
-CREATE TABLE tblfrmNPIMSDates (
+CREATE TABLE tblNPIMSDates (
     id int NOT NULL AUTO_INCREMENT,
-	PName varchar(64) DEFAULT '', /* name of the project, for ex: Liverpool */
-	PCategory varchar(64) DEFAULT '', /* category of the project, for ex: BC or CSMB */
+	PID int DEFAULT 0, /* id field of tblNPI */
     Milestone varchar(32) DEFAULT '', /* name of the milestone */
 	MDate varchar(32) DEFAULT '', /* date data but stores in string format for easier query, format: YYYYMMDD */
 	CDateTime datetime DEFAULT CURRENT_TIMESTAMP, /* when this record is inserted */
@@ -11,4 +10,4 @@ CREATE TABLE tblfrmNPIMSDates (
 );
 
 /* insert a row */
-insert into tblfrmNPIMSDates (PName, PCategory, Milestone, MDate, CDateTime, Reserved) values ('Liverpool', 'BC', 'RST', '20171209', CURRENT_TIMESTAMP, '');
+insert into tblNPIMSDates (PID, Milestone, MDate, CDateTime, Reserved) values (1, 'RST', '20171209', CURRENT_TIMESTAMP, '');
