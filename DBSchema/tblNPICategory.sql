@@ -6,6 +6,15 @@ CREATE TABLE tblNPICategory (
     PRIMARY KEY (id)
 );
 
-/* insert a row */
-insert into tblNPICategory (Category, CDateTime) values ('CSMB', CURRENT_TIMESTAMP);
-insert into tblNPICategory (Category, CDateTime) values ('BC', CURRENT_TIMESTAMP);
+/* deafult data */
+delete tblNPICategory;
+insert into tblNPICategory (Category, CDateTime) values ('Alienware', CURRENT_TIMESTAMP);
+insert into tblNPICategory (Category, CDateTime) values ('Inspiron', CURRENT_TIMESTAMP);
+insert into tblNPICategory (Category, CDateTime) values ('Vostro', CURRENT_TIMESTAMP);
+insert into tblNPICategory (Category, CDateTime) values ('XPS', CURRENT_TIMESTAMP);
+insert into tblNPICategory (Category, CDateTime) values ('Latitude', CURRENT_TIMESTAMP);
+insert into tblNPICategory (Category, CDateTime) values ('Optiplex', CURRENT_TIMESTAMP);
+insert into tblNPICategory (Category, CDateTime) values ('Precision', CURRENT_TIMESTAMP);
+insert into tblNPICategory (Category, CDateTime) values ('Tablet', CURRENT_TIMESTAMP);
+insert into tblNPICategory (Category, CDateTime) values ('IoT', CURRENT_TIMESTAMP);
+insert into tblNPICategory (Category, CDateTime) values ('Others', CURRENT_TIMESTAMP);

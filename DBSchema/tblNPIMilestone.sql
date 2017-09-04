@@ -8,4 +8,9 @@ CREATE TABLE tblNPIMilestone (
 );
 
 /* insert a row */
-insert into tblNPIMilestone (Milestone, OrderIdx, CDateTime) values ('RST', 10, CURRENT_TIMESTAMP);
+delete tblNPIMilestone;
+insert into tblNPIMilestone (Milestone, OrderIdx, CDateTime) values ('ULV', 1, CURRENT_TIMESTAMP);
+insert into tblNPIMilestone (Milestone, OrderIdx, CDateTime) values ('A-Can', 1, CURRENT_TIMESTAMP);
+insert into tblNPIMilestone (Milestone, OrderIdx, CDateTime) values ('A-Rev', 1, CURRENT_TIMESTAMP);
+insert into tblNPIMilestone (Milestone, OrderIdx, CDateTime) values ('FV', 1, CURRENT_TIMESTAMP);
+insert into tblNPIMilestone (Milestone, OrderIdx, CDateTime) values ('RTS', 1, CURRENT_TIMESTAMP);

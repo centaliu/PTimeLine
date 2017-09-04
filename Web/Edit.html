@@ -24,17 +24,22 @@
 	</tr>
 	<tr>
 		<td>
-			<div>Category: <select id='selCate' /><br /><br /></div>
+			<div>LOB: <select id='selCate' /><br /><br /></div>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<div>SSID: <input type='text' id='txtSSID' style='width:100px'/>(optinal)<br /></div>
+			<div>SSID: <input type='text' id='txtSSID' style='width:100px'/><br /><font size='2' color='darkblue'>(ex: 1028AB12, optinal)</font></div>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<div>ODM: <input type='text' id='txtODM' style='width:100px'/>(optinal)<br /></div>
+			<div>SSIDEx: <input type='text' id='txtSSIDEx' style='width:100px'/><br /><font size='2' color='darkblue'>(ex: 1028AB12_IR, optinal)</font></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div>ODM: <input type='text' id='txtODM' style='width:100px'/><br /><font size='2' color='darkblue'>(ex: Compal, optinal)</font></div>
 		</td>
 	</tr>
 	<tr>
@@ -92,7 +97,7 @@
 		//put data into the dropdown menu
 		var arrMSs = $strMilestones.split('~');
 		for (i=0; i<arrMSs.length; i++) {
-			if (arrMSs[i] != '') $('#tblDates tr:last').after("<tr><td><input type='button' style='width:80px' id='MS" + i + "' value='" + arrMSs[i] + "' onclick='changeDate(" + i + ")'/></td><td id='Date" + i + "' dval='19000101'>YYYY/MM/DD</td></tr>");
+			if (arrMSs[i] != '') $('#tblDates tr:last').after("<tr><td keyname='" + arrMSs[i] + "' data='1'><input type='button' style='width:80px' id='MS" + i + "' value='" + arrMSs[i] + "' onclick='changeDate(" + i + ")'/></td><td id='Date" + i + "' dval='19000101' data='1'></td></tr>");
 		}
 	}
 	
@@ -110,10 +115,51 @@
 	
 	//for saving data to remote DB
 	function saveData() {
+		$PName = $('#txtPName').val();
+		$PName = $.trim($PName);
+		$CateID = $('#selCate').val();
+		$SSID = $('#txtSSID').val();
+		$SSIDEx = $('#txtSSIDEx').val();
+		$ODM = $('#txtODM').val();
 		//check if project name is empty
-		
+		if ($PName == "") {
+			alert("project name could not be empty");
+			$('#txtPName').focus();
+			return;
+		}
 		//check if category is selected
+		if ($CateID == 999) {
+			alert("please select the category of the project");
+			$('#selCate').focus();
+			return;
+		}
+		//prepare project data for updating
+		$postStr = "";
+		$postStr = "curIdx=" + $curIdx + "&PName=" + $PName + "&CateID=" + $CateID + "&SSID=" + $SSID + "&SSIDEx=" + $SSIDEx + "&ODM=" + $ODM;
+		//prepare checkpoints for updating
+		$cnt = 0;
+		$lastDVal = "";
+		$MSs = "";
+		$MSvals = "";
+		$("#tblDates tr").each(function () {
+			$("td[dval]", this).each(function () {
+				$cnt++;
+				$lastDVal = $(this).attr("dval");
+				if ($lastDVal != "19000101") {
+					if ($MSvals == "") $MSvals = $(this).attr("dval"); else $MSvals = $MSvals + "," + $(this).attr("dval");
+				}
+			});
+			$("td[keyname]", this).each(function () {
+				$cnt++;
+				if ($lastDVal != "19000101") {
+					if ($MSs == "") $MSs = $(this).attr("keyname"); else $MSs = $MSs + "," + $(this).attr("keyname");
+				}
+			});
+		});
+		//combining data
+		$postStr = $postStr + "&MSs=" + $MSs + "&MSvals=" + $MSvals;
 		
+		alert($postStr);
 	}
 </script>
 
