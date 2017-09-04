@@ -11,7 +11,15 @@
 <table cellspacing='0' cellpadding='4' border='0'>
 	<tr>
 		<td>
-			<div>Project Name: <input type='text' id='txtPName' /><br /><br /></div>
+			<div>Project Name: <input type='text' id='txtPName' /><br /></div>
+		</td>
+		<td rowspan='6'>
+			<div id="datepicker"></div>
+		</td>
+		<td valign='top' rowspan='6'>
+			<table id='tblDates' cellspacing='0' cellpadding='4' border='0'>
+				<tr><td colspan='3' align='center'>Milestones</td></tr>
+			</table>
 		</td>
 	</tr>
 	<tr>
@@ -19,18 +27,20 @@
 			<div>Category: <select id='selCate' /><br /><br /></div>
 		</td>
 	</tr>
-	<tr><td>&nbsp;</td></tr>
 	<tr>
 		<td>
-			<div id="datepicker"></div>
-		</td>
-		<td valign='top'>
-			<table id='tblDates' cellspacing='0' cellpadding='4' border='0'>
-				<tr><td colspan='3' align='center'>Milestones</td></tr>
-			</table>
+			<div>SSID: <input type='text' id='txtSSID' style='width:100px'/>(optinal)<br /></div>
 		</td>
 	</tr>
 	<tr>
+		<td>
+			<div>ODM: <input type='text' id='txtODM' style='width:100px'/>(optinal)<br /></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type='button' id='btnSave' value='Save' onclick='saveData()'/>
+		</td>
 	</tr>
 </table>
 </body>
@@ -61,6 +71,7 @@
 		});
 		//put data into the dropdown menu
 		var arrCates = $strCates.split('~');
+		$('#selCate').append($('<option/>', {value: 999, text : '==Select==' }));
 		for (i=0; i<arrCates.length; i++) {
 			if (arrCates[i] != '') $('#selCate').append($('<option/>', {value: arrCates[i], text : arrCates[i] }));
 		}
@@ -78,12 +89,31 @@
 				$strMilestones = '~FC~BCO~A-rev~A-can~RST';
 			}
 		});
-		alert($strMilestones);
 		//put data into the dropdown menu
 		var arrMSs = $strMilestones.split('~');
 		for (i=0; i<arrMSs.length; i++) {
-			if (arrMSs[i] != '') $('#tblDates tr:last').after("<tr><td><input type='button' style='width:80px' id='MS" + i + "' value='" + arrMSs[i] + "'/></td><td>YYYY/MM/DD</td></tr>");
+			if (arrMSs[i] != '') $('#tblDates tr:last').after("<tr><td><input type='button' style='width:80px' id='MS" + i + "' value='" + arrMSs[i] + "' onclick='changeDate(" + i + ")'/></td><td id='Date" + i + "' dval='19000101'>YYYY/MM/DD</td></tr>");
 		}
+	}
+	
+	//for changing specific date in the table
+	function changeDate(idx) {
+		$thDate = $("#datepicker").datepicker("getDate");
+		$YYYY = "" + ($thDate.getYear() + 1900);
+		$MM = "" + ($thDate.getMonth() + 1);
+		if ($MM.length == 1) $MM = "0" + $MM;
+		$DD = "" + ($thDate.getDate());
+		if ($DD.length == 1) $DD = "0" + $DD;
+		$('#Date' + idx).html($YYYY + "/" + $MM + "/" + $DD);
+		$('#Date' + idx).attr('dval', $YYYY + $MM + $DD);
+	}
+	
+	//for saving data to remote DB
+	function saveData() {
+		//check if project name is empty
+		
+		//check if category is selected
+		
 	}
 </script>
 
