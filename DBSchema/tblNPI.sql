@@ -3,6 +3,7 @@ CREATE TABLE tblNPI (
     id int NOT NULL AUTO_INCREMENT,
 	PName varchar(64) DEFAULT '', /* name of the project, for ex: Liverpool */
 	PCategory varchar(64) DEFAULT '', /* category of the project, for ex: BC or CSMB */
+	ODM varchar(64) DEFAULT '', /* optional, ODM of the project, for ex: compal or foxconn */
 	SSID varchar(64) DEFAULT '', /* optional, input if avialable, ex: 1028CAFE */
 	SSIDEx varchar(64) DEFAULT '', /* optional, input if avialable, ex: 1028CAFE_IR */
 	CDateTime datetime DEFAULT CURRENT_TIMESTAMP, /* when this record is inserted */
@@ -11,4 +12,4 @@ CREATE TABLE tblNPI (
 );
 
 /* insert a row */
-insert into tblNPI (PName, PCategory, SSID, SSIDEx, CDateTime, Reserved) values ('Liverpool', 'BC', '1028BABE', '1028BABE_IR', CURRENT_TIMESTAMP, '');
+insert into tblNPI (PName, PCategory, ODM, SSID, SSIDEx, CDateTime, Reserved) values ('Liverpool', 'BC', 'compal', '1028BABE', '1028BABE_IR', CURRENT_TIMESTAMP, '');
